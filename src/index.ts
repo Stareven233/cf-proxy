@@ -93,8 +93,11 @@ export default {
 			rawPath = rawPath.replace(/^proxy\/?/, '')
 		}
 		if (rawPath === '') {
-			// TODO 修改index_url地址, 增加/proxy后缀
-			return fetch(index_url)
+			const response = await fetch(index_url)
+			const html = await response.text()
+			return new Response(html, {
+				headers: { 'Content-Type': 'text/html' }
+			})
 		} else if (!rawPath.startsWith('http')) {
 			return new Response('Invalid input', { status: 403 })
 		}
