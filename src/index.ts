@@ -12,7 +12,7 @@
  */
 
 const sizeLimit = 1024 * 1024 * 1024 * 10 // 10GB
-const index_url = 'https://raw.githubusercontent.com/Stareven233/cf-proxy/refs/heads/main/src/index.html'
+const index_url = 'https://raw.githubusercontent.com/Stareven233/cf-proxy/refs/heads/main/src/index.min.html'
 const exps = [
 	/^(?:https?:\/\/)?github\.com\/([^/]+)\/([^/]+)\/(?:releases|archive)\/.*$/i,
 	/^(?:https?:\/\/)?github\.com\/([^/]+)\/([^/]+)\/(?:blob|raw)\/.*$/i,
@@ -84,14 +84,14 @@ async function proxy(request: Request, url: string): Promise<Response> {
 export default {
 	async fetch(request: Request): Promise<Response> {
 		let rawPath = new URL(request.url).pathname.slice(1)
-		if (rawPath === '') {
-			return new Response('External Server Error', { status: 500 })
-		}
-		else if (!rawPath.startsWith('proxy')) {
-			return new Response('Invalid input', { status: 403 })
-		} else {
-			rawPath = rawPath.replace(/^proxy\/?/, '')
-		}
+		// if (rawPath === '') {
+		// 	return new Response('External Server Error', { status: 500 })
+		// }
+		// else if (!rawPath.startsWith('proxy')) {
+		// 	return new Response('Invalid input', { status: 403 })
+		// } else {
+		// 	rawPath = rawPath.replace(/^proxy\/?/, '')
+		// }
 		if (rawPath === '') {
 			const response = await fetch(index_url)
 			const html = await response.text()
